@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { INPUT } from '../utils/constants';
 
-export default function TextInput({ type, value, onChange }) {
+export default function TextInput({ type, value, onChange, refValue }) {
   return (
     <Wrapper>
       <InputLabel for={type}>{type}</InputLabel>
@@ -13,6 +13,7 @@ export default function TextInput({ type, value, onChange }) {
         value={value}
         required
         onChange={onChange}
+        ref={refValue}
       />
     </Wrapper>
   );

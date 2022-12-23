@@ -50,10 +50,35 @@ Test: 테스트 코드 수정에 대한 커밋
 
 ### 2: 로그인 API 호출 및 응답 관리
 
-- axios 관련 함수 (담당자: 유서경)
+- 2.1 axios 관련 함수 (담당자: 유서경)
 
   - 참고 코드: 이수창
   - 선택 이유: Axios middleware 등을 사용한 라이브러리 활용
+  - 코드 활용
+
+    - 2.1.1. `.create()` 메서드를 사용해 사용자 정의 구성을 사용하는 axios 인스턴스를 생성
+
+      ```js
+      export const setting = axios.create({
+        baseURL,
+        headers,
+      });
+      ```
+
+    - 2.1.2 요청 인터셉터를 추가하여 `then`, `catch`로 처리되기 전에 작업 수행
+      - 토큰이 존재하면 config header에 `Authorization` 키 추가
+      - 이후 `axios.interceptors.request.eject`로 필요 시 인터셉터 제거도 가능함
+      ```js
+      preconfigedAxios.interceptors.request.use((config) => {
+        const accessToken = getLocalStorageToken();
+        if (accessToken && config.headers) {
+          config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        return config;
+      });
+      ```
+    - 2.1.3 `validateStatus` config 옵션을 사용하면, 오류를 발생시키는 HTTP 코드를 정의 가능
+      - 현재 프로젝트에서는 axios의 기본 상태 코드 처리 방법을 따름
 
 - response handle (담당자: 김형욱, 경지윤)
 
@@ -72,6 +97,33 @@ Test: 테스트 코드 수정에 대한 커밋
   - 참고 코드: 경지윤
   - 선택 이유: 리다이렉션 등 라우팅 관련 로직을 `Router` 컴포넌트에 위임
 
-### 4: Todo list 목록 구현(Create, Read)
+### 4-5: Todo list 목록 구현
 
-### 5: Todo list 수정 삭제 기능 구현(Update, Delete)
+- Todo 페이지 구조
+
+  - A.페이지 CSS(담당자: 유서경)
+
+    - 참고 코드: 유서경
+
+  - B.TodoList(담당자: 임수진)
+
+    - 최신 투두 아래에
+
+    - C.TodoItem(담당자: 김수진)
+      - 참고 코드: 임수진
+      - 수정 모드 X: 체크박스 수정
+      - 수정 모드: 텍스트 수정
+        - 여러 컴포넌트 동시에 가능
+
+  - D. TodoForm 컴포넌트: 투두 새로 추가(담당자: 경지윤)
+
+    - useRef 사용하여 만들기
+
+  - E. Todo CRUD(담당자: 이수창, 차지환)
+
+    - 참고 코드: 이수창
+    - contextAPI
+
+  - F.Todo axios(담당자: 김형욱)
+
+    - todoAxios 인스턴스 생성
