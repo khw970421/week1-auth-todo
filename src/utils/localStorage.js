@@ -7,9 +7,6 @@ console.log('!!!!!');
 console.log("double")
 console.log('double')
 
-
-
-
 console.log('double');
 
 export { setItem, getItem };
