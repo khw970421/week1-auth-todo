@@ -3,4 +3,8 @@ const setItem = (key, value) =>
 
 const getItem = (key) => JSON.parse(localStorage.getItem(key));
 
+
+
+
+
 export { setItem, getItem };
