@@ -10,11 +10,10 @@ import { saveLocalStorageToken } from '../utils/local-storage-fn';
 
 export default function SignForm({ signState, setSignState }) {
   const [isActive, setIsActive] = useState(false);
-  const [, setForm] = useState(initialForm);
+  // const [, setForm] = useState(initialForm);
   const emailRef = useRef(initialForm.email);
   const passwordRef = useRef(initialForm.password);
   const navigate = useNavigate();
-
   useEffect(() => {
     clearInput();
   }, [signState]);
@@ -23,18 +22,22 @@ export default function SignForm({ signState, setSignState }) {
     emailRef.current.value = '';
     passwordRef.current.value = '';
   };
-
+  console.log('렌더링');
   const handleChange = (e) => {
-    // useState 부분은 지환님 코드 합치면 삭제
-    setForm((prev) => {
-      const newForm = { ...prev, [e.target.id]: e.target.value };
-      return newForm;
-    });
+    // FIXME: useState 부분은 지환님 코드 합치면 삭제
+    // setForm((prev) => {
+    //   const newForm = { ...prev, [e.target.id]: e.target.value };
+    //   return newForm;
+    // });
 
     const isValidated =
       validation('email', emailRef.current.value) &&
       validation('password', passwordRef.current.value);
-    isValidated ? setIsActive(true) : setIsActive(false);
+
+    // FIXME: isValidated ? setIsActive(true) : setIsActive(false);
+    if (isValidated !== isActive) {
+      setIsActive(isValidated);
+    }
     return;
   };
 
@@ -59,13 +62,13 @@ export default function SignForm({ signState, setSignState }) {
     <Form onSubmit={handleSubmit}>
       <TextInput
         type="email"
-        value={emailRef.current.value}
+        // value={emailRef.current.value}
         onChange={handleChange}
         refValue={emailRef}
       />
       <TextInput
         type="password"
-        value={passwordRef.current.value}
+        // value={passwordRef.current.value}
         onChange={handleChange}
         refValue={passwordRef}
       />
